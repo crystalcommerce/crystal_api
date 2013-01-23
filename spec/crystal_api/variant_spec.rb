@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe CrystalApi::Variant do
-
   describe "#buy_price" do
     let(:attribute) { :buy_price }
     it_should_behave_like "money attribute"
@@ -58,5 +57,31 @@ describe CrystalApi::Variant do
     it "defines the infinite_qty? method" do
       CrystalApi::Variant.new(is_infinite_qty: true).infinite_qty?.should == true
     end
+  end
+
+  describe ".from_json" do
+    let(:json_hash) {{
+      'variant' => {
+        'id'                     => 123,
+        'is_default'             => false,
+        'is_infinite_qty'        => false,
+        'product_id'             => 123,
+        'qty'                    => 2,
+        'wtb_qty'                => 8,
+        'sell_price'             => {'money' => {'cents' => 500, 'currency' => 'USD'}},
+        'buy_price'              => {'money' => {'cents' => 100, 'currency' => 'USD'}},
+        'store_credit_buy_price' => {'money' => {'cents' => 130, 'currency' => 'USD'}},
+        'catalog_id'             => 'skusku',
+        'descriptors' => [
+          {
+            'variant_descriptor' => {
+              'name' => 'Condition',
+              'value' => 'Near Mint',
+            }
+          }
+        ]
+      }}}
+    subject { CrystalApi::Variant.from_json(json_hash) }
+    its(:id) { should == 123 }
   end
 end

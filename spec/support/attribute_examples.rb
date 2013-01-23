@@ -1,4 +1,14 @@
 shared_examples_for "money attribute" do
+  context "json argument" do
+    subject { CrystalApi::Variant.new("#{attribute}" => {
+      'money' => {'cents' => 500, 'currency' => 'USD'}
+    })}
+
+    it "parses as money" do
+      subject.send(attribute).should == Money.new(500)
+    end
+  end
+
   context "string argument" do
     subject { CrystalApi::Variant.new("#{attribute}" => "5.0")}
 
