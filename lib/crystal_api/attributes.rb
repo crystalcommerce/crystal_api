@@ -33,7 +33,7 @@ module CrystalApi
 
       def object_attribute(attribute_name)
         attr_reader attribute_name
-        @attributes[attribute_name] = :object
+        @attributes[attribute_name.to_s] = :object
       end
 
       def root_element(elem)
@@ -41,7 +41,8 @@ module CrystalApi
       end
 
       def get_root_element
-        @root_element || raise(NoRootElementDefined.new("No root element was defined for #{(class << self; self; end).name}"))
+        klass = self
+        @root_element || raise(NoRootElementDefined.new("No root element was defined for #{klass.name}"))
       end
 
       def from_json(json_hash)
@@ -96,22 +97,21 @@ module CrystalApi
     end
 
     def parse_object(value)
-      value && constantize("CrystalApi::#{titleize(value.keys.first)}").from_json(value)
+      return unless value
+
+      klass = find_klass(value.keys.first)
+      klass.from_json(value) if klass
     end
 
     def titleize(word)
       word.gsub(%r{\b('?[a-z])}) { $1.capitalize }
     end
 
-    def constantize(camel_cased_word)
-      names = camel_cased_word.split('::')
-      names.shift if names.empty? || names.first.empty?
+    def find_klass(word)
+      camel_cased_word = titleize(word)
 
-      constant = Object
-      names.each do |name|
-        constant = constant.const_defined?(name) ? constant.const_get(name) : constant.const_missing(name)
-      end
-      constant
+      CrystalApi.const_defined?("#{camel_cased_word}") &&
+        CrystalApi.const_get(camel_cased_word)
     end
   end
 end
