@@ -83,5 +83,8 @@ describe CrystalApi::Variant do
       }}}
     subject { CrystalApi::Variant.from_json(json_hash) }
     its(:id) { should == 123 }
+    its(:descriptors) { should == [
+      CrystalApi::VariantDescriptor.new(name: 'Condition', value: 'Near Mint')
+    ] }
   end
 end

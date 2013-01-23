@@ -17,5 +17,7 @@ module CrystalApi
 
     boolean_attribute :is_default
     boolean_attribute :is_infinite_qty
+
+    array_attribute :descriptors, :object
   end
 end

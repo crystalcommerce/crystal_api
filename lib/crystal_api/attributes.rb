@@ -1,4 +1,5 @@
 require 'set'
+require 'active_support'
 
 module CrystalApi
   module Attributes
@@ -36,6 +37,11 @@ module CrystalApi
         @attributes[attribute_name.to_s] = :object
       end
 
+      def array_attribute(attribute_name, type)
+        attr_reader attribute_name
+        @attributes[attribute_name.to_s] = [:array, type]
+      end
+
       def root_element(elem)
         @root_element = elem.to_s
       end
@@ -47,7 +53,8 @@ module CrystalApi
 
       def from_json(json_hash)
         attrs = attributes.keys.inject({}) do |acc, attr|
-          acc[attr] = json_hash.fetch(get_root_element, {})[attr]
+          val = json_hash.fetch(get_root_element, {})[attr]
+          acc[attr] = val unless val.nil?
           acc
         end
         new(attrs)
@@ -55,9 +62,20 @@ module CrystalApi
     end
 
     def initialize(args = {})
+      unexpected_keys = []
+
       args.each do |arg, value|
-        instance_variable_set("@#{arg}", parse_arg(arg, value))
+        if self.class.attributes.has_key?(arg.to_s)
+          instance_variable_set("@#{arg}", parse_arg(arg, value))
+        else
+          unexpected_keys << arg
+        end
       end
+
+      if !unexpected_keys.empty?
+        raise ArgumentError.new("Unexpected hash keys: #{unexpected_keys}")
+      end
+
       self.freeze
     end
 
@@ -68,11 +86,38 @@ module CrystalApi
       end
     end
 
+    def ==(other)
+      self.eql?(other)
+    end
+
+    def eql?(other)
+      return false if other.class != self.class
+      self.class.attributes.keys.all? do |field|
+        self.send(field) == other.send(field)
+      end
+    end
+
+    def hash
+      result = 0
+      self.class.attributes.keys.each do |field|
+        result += self.send(field).hash
+      end
+      return result + self.class.hash
+    end
+
     private
 
     def parse_arg(arg, value)
-      type = self.class.attributes[arg.to_s]
-      send("parse_#{type}", value) if type
+      type, type2 = self.class.attributes[arg.to_s]
+      if type
+        if type2 && value
+          value.map do |val|
+            send("parse_#{type2}", val)
+          end
+        else
+          send("parse_#{type}", value)
+        end
+      end
     end
 
     def parse_money(value)
@@ -97,18 +142,14 @@ module CrystalApi
     end
 
     def parse_object(value)
-      return unless value
+      return if value.nil?
 
       klass = find_klass(value.keys.first)
       klass.from_json(value) if klass
     end
 
-    def titleize(word)
-      word.gsub(%r{\b('?[a-z])}) { $1.capitalize }
-    end
-
     def find_klass(word)
-      camel_cased_word = titleize(word)
+      camel_cased_word = ActiveSupport::Inflector.camelize(word)
 
       CrystalApi.const_defined?("#{camel_cased_word}") &&
         CrystalApi.const_get(camel_cased_word)

@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "money", "~> 5"
   gem.add_dependency "values", "~> 1.2.1"
+  gem.add_dependency "activesupport"
 
   gem.add_development_dependency 'rspec', '~> 2.11.0'
   gem.add_development_dependency 'guard', '~> 1.2.3'
