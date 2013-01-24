@@ -1,6 +1,12 @@
 # CrystalApi
 
-TODO: Write a gem description
+A library for using the CrystalCommerce API in Ruby. See
+http://apidocs.crystalcommerce.com for API documentation.
+
+## TODO
+
+* Webhook record parser
+* Webhook registration / deregistration
 
 ## Installation
 
@@ -18,7 +24,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    store_endpoint = CrystalApi::StoreEndpoint.new(
+      base_url: "https://apitest-api.crystalcommerce.com/v1",
+      token: "your-oauth2-token"
+    )
+
+    store_prefs = store_endpoint.get("/prefs/store")
 
 ## Contributing
 
@@ -27,3 +38,7 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## License
+
+See LICENSE.txt
