@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:3000/api/v1/prefs/store
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*; q=0.5, application/xml'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - OAuth TOKEN
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: ! 'OK '
+    headers:
+      Etag:
+      - ! '"62dbdcce719c67de7a0eee8d9e92ea2c"'
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Md5:
+      - 62dbdcce719c67de7a0eee8d9e92ea2c
+      Connection:
+      - Keep-Alive
+      Server:
+      - WEBrick/1.3.1 (Ruby/1.8.7/2012-02-08)
+      X-Runtime:
+      - '211'
+      Access-Control-Allow-Origin:
+      - ! '*'
+      Date:
+      - Thu, 24 Jan 2013 04:45:30 GMT
+      Cache-Control:
+      - private, max-age=0, must-revalidate
+      Content-Length:
+      - '2498'
+      Access-Control-Expose-Headers:
+      - content-type, content-md5, x-oauth-scopes, x-accepted-oauth-scopes, content-length,
+        cache-control
+      Access-Control-Allow-Methods:
+      - GET, POST, PUT, DELETE, OPTIONS
+      Access-Control-Allow-Headers:
+      - origin, authorization, content-type, accept
+      Set-Cookie:
+      - _admin_session=d7405de32bc2300e951a253d069ad71d; path=/; expires=Fri, 25-Jan-2013
+        00:45:30 GMT; HttpOnly
+    body:
+      encoding: US-ASCII
+      string: ! '{"store_prefs":{"buylist_email":"donald@crystalcommerce.com","satisfaction_blurb":"Our
+        #1 goal is making sure you''re happy with your purchase today. Happy customers
+        come back soon and tell their friends. Its a win, win.","enable_frontend_auto_translate":false,"logo_photo":{"photo":{"is_default":false,"urls":{"large":{"href":"http://crystalcommerce-development.s3.amazonaws.com/photo/arux/file/8e233b1f3da489341a9d55a1ca744556/large/arux-banner.png"},"medium":{"href":"http://crystalcommerce-development.s3.amazonaws.com/photo/arux/file/8e233b1f3da489341a9d55a1ca744556/medium/arux-banner.png"},"original":{"href":"http://crystalcommerce-development.s3.amazonaws.com/photo/arux/file/8e233b1f3da489341a9d55a1ca744556/arux-banner.png"},"huge":{"href":"http://crystalcommerce-development.s3.amazonaws.com/photo/arux/file/8e233b1f3da489341a9d55a1ca744556/huge/arux-banner.png"},"thumb":{"href":"http://crystalcommerce-development.s3.amazonaws.com/photo/arux/file/8e233b1f3da489341a9d55a1ca744556/thumb/arux-banner.png"}}}},"return_blurb":"If
+        your order ever arrives in less than expected condition, please promptly return
+        it to us for a full refund. We take your business with us very seriously.","time_zone":"Pacific
+        Time (US & Canada)","city":"Seattle","hostname":"store.arux.net","customer_service_phone":"555-555-5555","zip":"98125","sales_tax":"9","cancel":"14","default_currency_code":"USD","default_locale":"x-bork","privacy_blurb":"We
+        promise to never ever sell your personal private information to any 3rd party
+        company! We hate spam too. Order today with confidence.","enable_manual_credit_card_capture":false,"store_credit_multiplier":"1.3","buylist_cancel_days":"0","checkout_special_instructions":"","default_exchange_rate":"1","enable_buy_order_notifications":"1","enable_buylist":true,"enable_bcc_buylist_confirmation_emails":false,"enable_tax_on_shipping":true,"enable_sort_by_price":true,"feedback_timespan":"14","home_redirect":"/catalog/magic_singles-core_sets-magic_2012/306","phone":"555-555-5555","state":"WA","enable_referafriend":true,"address":"3400
+        NE 110th ST #B-1","payment":"7","contact_name":"Mr. Arux","name":"Arux Gaming
+        and Hobbies","display_customer_service_phone":false,"enable_order_notifications":"1","enable_account_approval":false,"enable_watermarking_of_product_photos":false,"watermark_photo":null,"country":"US","contact_email":"donald@crystalcommerce.com","buylist_reminder_days":"0","hide_bank_transfer_details_in_emails":false,"enable_invoice_logo":false}}'
+    http_version: 
+  recorded_at: Thu, 24 Jan 2013 04:45:30 GMT
+recorded_with: VCR 2.2.4

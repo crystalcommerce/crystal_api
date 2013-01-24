@@ -1,5 +1,4 @@
 require 'set'
-require 'active_support'
 require 'bigdecimal'
 
 module CrystalApi
@@ -20,8 +19,13 @@ module CrystalApi
       def boolean_attribute(attribute_name)
         attr_reader attribute_name
         @attributes[attribute_name.to_s] = :boolean
-        define_method("#{attribute_name.to_s.match(/^is_(.*)$/)[1]}?") do
-          send(attribute_name)
+
+        if matches = attribute_name.to_s.match(/^is_(.*)$/)
+          define_method("#{matches[1]}?") do
+            send(attribute_name)
+          end
+        else
+          alias_method "#{attribute_name}?", attribute_name
         end
       end
 
@@ -127,7 +131,7 @@ module CrystalApi
     end
 
     def parse_decimal(value)
-      BigDecimal.new(value)
+      BigDecimal.new(value.to_s) unless value.nil?
     end
 
     def parse_boolean(value)
@@ -139,11 +143,11 @@ module CrystalApi
     end
 
     def parse_datetime(value)
-      DateTime.parse(value)
+      DateTime.parse(value) if value
     end
 
     def parse_date(value)
-      Date.parse(value)
+      Date.parse(value) if value
     end
 
     def parse_url(value)
@@ -166,7 +170,7 @@ module CrystalApi
     def parse_object(value)
       return value unless value.is_a?(Hash)
 
-      klass = find_klass(value.keys.first)
+      klass = CrystalApi.find_klass(value.keys.first)
       klass.from_json(value) if klass
     end
 
@@ -174,11 +178,5 @@ module CrystalApi
       send("parse_#{type}", value)
     end
 
-    def find_klass(word)
-      camel_cased_word = ActiveSupport::Inflector.camelize(word)
-
-      CrystalApi.const_defined?("#{camel_cased_word}") &&
-        CrystalApi.const_get(camel_cased_word)
-    end
   end
 end

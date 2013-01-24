@@ -20,11 +20,13 @@ Gem::Specification.new do |gem|
   gem.add_dependency "money", "~> 5"
   gem.add_dependency "values", "~> 1.2.1"
   gem.add_dependency "activesupport"
+  gem.add_dependency "rest-client"
 
   gem.add_development_dependency 'rspec', '~> 2.11.0'
   gem.add_development_dependency 'guard', '~> 1.2.3'
   gem.add_development_dependency 'guard-rspec', '~> 1.2.1'
   gem.add_development_dependency 'vcr', '~> 2.2.4'
+  gem.add_development_dependency 'webmock', '~> 1.8.0'
   gem.add_development_dependency 'libnotify'
   gem.add_development_dependency 'rb-inotify', '~> 0.8.8'
 end
