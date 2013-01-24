@@ -10,14 +10,11 @@ module CrystalApi
     module ClassMethods
       attr_reader :attributes
 
-      def integer_attribute(attribute_name)
-        attr_reader attribute_name
-        @attributes[attribute_name.to_s] = :integer
-      end
-
-      def decimal_attribute(attribute_name)
-        attr_reader attribute_name
-        @attributes[attribute_name.to_s] = :decimal
+      [:integer, :decimal, :string, :object, :datetime, :date, :url].each do |type|
+        define_method("#{type}_attribute") do |attribute_name|
+          attr_reader attribute_name
+          @attributes[attribute_name.to_s] = type
+        end
       end
 
       def boolean_attribute(attribute_name)
@@ -28,22 +25,12 @@ module CrystalApi
         end
       end
 
-      def string_attribute(attribute_name)
-        attr_reader attribute_name
-        @attributes[attribute_name.to_s] = :string
-      end
-
-      def object_attribute(attribute_name)
-        attr_reader attribute_name
-        @attributes[attribute_name.to_s] = :object
-      end
-
       def embedded_attribute(attribute_name, type = :object)
         attr_reader attribute_name
         @attributes[attribute_name.to_s] = [:embedded, type]
       end
 
-      def array_attribute(attribute_name, type)
+      def array_attribute(attribute_name, type = :object)
         attr_reader attribute_name
         @attributes[attribute_name.to_s] = [:array, type]
       end
@@ -51,21 +38,6 @@ module CrystalApi
       def hash_attribute(attribute_name, type)
         attr_reader attribute_name
         @attributes[attribute_name.to_s] = [:hash, type]
-      end
-
-      def datetime_attribute(attribute_name)
-        attr_reader attribute_name
-        @attributes[attribute_name.to_s] = :datetime
-      end
-
-      def date_attribute(attribute_name)
-        attr_reader attribute_name
-        @attributes[attribute_name.to_s] = :date
-      end
-
-      def url_attribute(attribute_name)
-        attr_reader attribute_name
-        @attributes[attribute_name.to_s] = :url
       end
 
       def root_element(elem)
@@ -79,7 +51,7 @@ module CrystalApi
 
       def from_json(json_hash)
         json_attributes = json_hash.fetch(get_root_element, json_hash)
-        embedded = json_attributes.delete("_embedded")
+        embedded = json_attributes.delete("_embedded") || {}
         attrs = attributes.inject({}) do |acc, (attr, type)|
           if Array(type).first == :embedded
             val = embedded[attr]
