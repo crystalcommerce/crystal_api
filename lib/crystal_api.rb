@@ -35,6 +35,7 @@ require 'crystal_api/category'
 require 'crystal_api/market_prices'
 require 'crystal_api/descriptor'
 require 'crystal_api/store_prefs'
+require 'crystal_api/webhook'
 require 'crystal_api/paginated_collection'
 
 require 'crystal_api/store_endpoint'
