@@ -1,21 +1,6 @@
 require 'spec_helper'
 
 describe CrystalApi::Variant do
-  describe "#buy_price" do
-    let(:attribute) { :buy_price }
-    it_should_behave_like "money attribute"
-  end
-
-  describe "#sell_price" do
-    let(:attribute) { :sell_price }
-    it_should_behave_like "money attribute"
-  end
-
-  describe "#store_credit_buy_price" do
-    let(:attribute) { :store_credit_buy_price }
-    it_should_behave_like "money attribute"
-  end
-
   describe "#id" do
     let(:attribute) { :id }
     it_should_behave_like "integer attribute"
@@ -86,5 +71,8 @@ describe CrystalApi::Variant do
     its(:descriptors) { should == [
       CrystalApi::VariantDescriptor.new(name: 'Condition', value: 'Near Mint')
     ] }
+		its(:sell_price) { should == Money.new(500) }
+		its(:buy_price) { should == Money.new(100) }
+		its(:store_credit_buy_price) { should == Money.new(130) }
   end
 end

@@ -4,9 +4,9 @@ module CrystalApi
 
     root_element :variant
 
-    money_attribute :sell_price
-    money_attribute :buy_price
-    money_attribute :store_credit_buy_price
+    object_attribute :sell_price
+    object_attribute :buy_price
+    object_attribute :store_credit_buy_price
 
     integer_attribute :id
     integer_attribute :product_id

@@ -1,5 +1,6 @@
 require 'set'
 require 'active_support'
+require 'bigdecimal'
 
 module CrystalApi
   module Attributes
@@ -9,14 +10,14 @@ module CrystalApi
     module ClassMethods
       attr_reader :attributes
 
-      def money_attribute(attribute_name)
-        attr_reader attribute_name
-        @attributes[attribute_name.to_s] = :money
-      end
-
       def integer_attribute(attribute_name)
         attr_reader attribute_name
         @attributes[attribute_name.to_s] = :integer
+      end
+
+      def decimal_attribute(attribute_name)
+        attr_reader attribute_name
+        @attributes[attribute_name.to_s] = :decimal
       end
 
       def boolean_attribute(attribute_name)
@@ -37,9 +38,34 @@ module CrystalApi
         @attributes[attribute_name.to_s] = :object
       end
 
+      def embedded_attribute(attribute_name, type = :object)
+        attr_reader attribute_name
+        @attributes[attribute_name.to_s] = [:embedded, type]
+      end
+
       def array_attribute(attribute_name, type)
         attr_reader attribute_name
         @attributes[attribute_name.to_s] = [:array, type]
+      end
+
+      def hash_attribute(attribute_name, type)
+        attr_reader attribute_name
+        @attributes[attribute_name.to_s] = [:hash, type]
+      end
+
+      def datetime_attribute(attribute_name)
+        attr_reader attribute_name
+        @attributes[attribute_name.to_s] = :datetime
+      end
+
+      def date_attribute(attribute_name)
+        attr_reader attribute_name
+        @attributes[attribute_name.to_s] = :date
+      end
+
+      def url_attribute(attribute_name)
+        attr_reader attribute_name
+        @attributes[attribute_name.to_s] = :url
       end
 
       def root_element(elem)
@@ -52,8 +78,14 @@ module CrystalApi
       end
 
       def from_json(json_hash)
-        attrs = attributes.keys.inject({}) do |acc, attr|
-          val = json_hash.fetch(get_root_element, {})[attr]
+        json_attributes = json_hash.fetch(get_root_element, json_hash)
+        embedded = json_attributes.delete("_embedded")
+        attrs = attributes.inject({}) do |acc, (attr, type)|
+          if Array(type).first == :embedded
+            val = embedded[attr]
+          else
+            val = json_attributes[attr]
+          end
           acc[attr] = val unless val.nil?
           acc
         end
@@ -111,26 +143,19 @@ module CrystalApi
       type, type2 = self.class.attributes[arg.to_s]
       if type
         if type2 && value
-          value.map do |val|
-            send("parse_#{type2}", val)
-          end
+          send("parse_#{type}", value, type2)
         else
           send("parse_#{type}", value)
         end
       end
     end
 
-    def parse_money(value)
-      if value.is_a?(Hash)
-        Money.new(value['money']['cents'],
-                  value['money'].fetch('currency', 'USD'))
-      else
-        Money.parse(value)
-      end
-    end
-
     def parse_integer(value)
       value.to_i
+    end
+
+    def parse_decimal(value)
+      BigDecimal.new(value)
     end
 
     def parse_boolean(value)
@@ -141,11 +166,40 @@ module CrystalApi
       value.to_s
     end
 
+    def parse_datetime(value)
+      DateTime.parse(value)
+    end
+
+    def parse_date(value)
+      Date.parse(value)
+    end
+
+    def parse_url(value)
+      Url.new(value)
+    end
+
+    def parse_array(value, type = :object)
+      value.map do |val|
+        send("parse_#{type}", val)
+      end
+    end
+
+    def parse_hash(value, type = :object)
+      value.inject({}) do |acc, (key, val)|
+        acc[key] = send("parse_#{type}", val)
+        acc
+      end
+    end
+
     def parse_object(value)
-      return if value.nil?
+      return value unless value.is_a?(Hash)
 
       klass = find_klass(value.keys.first)
       klass.from_json(value) if klass
+    end
+
+    def parse_embedded(value, type)
+      send("parse_#{type}", value)
     end
 
     def find_klass(word)
