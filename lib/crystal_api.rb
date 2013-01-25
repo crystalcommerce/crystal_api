@@ -39,3 +39,4 @@ require 'crystal_api/webhook'
 require 'crystal_api/paginated_collection'
 
 require 'crystal_api/store_endpoint'
+require 'crystal_api/webhook_registration'

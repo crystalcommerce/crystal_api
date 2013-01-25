@@ -5,7 +5,6 @@ http://apidocs.crystalcommerce.com for API documentation.
 
 ## TODO
 
-* Webhook registration / deregistration
 
 ## Installation
 
