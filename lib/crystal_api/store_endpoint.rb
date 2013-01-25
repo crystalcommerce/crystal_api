@@ -7,7 +7,7 @@ module CrystalApi
 
     class Response < Value.new(:parsed, :raw)
       def to_s
-        "<CrystalApi::StoreEndPoint::Response parsed:#{parsed.class.name} raw.length:#{raw.length}>"
+        "<CrystalApi::StoreEndpoint::Response parsed:#{parsed.class.name} raw.length:#{raw.length}>"
       end
     end
 
