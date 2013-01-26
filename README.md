@@ -5,6 +5,8 @@ http://apidocs.crystalcommerce.com for API documentation.
 
 ## TODO
 
+* Receiving Webhook payload verification
+* Sending Webhook payload signing
 
 ## Installation
 
