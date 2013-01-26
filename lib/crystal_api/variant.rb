@@ -10,10 +10,12 @@ module CrystalApi
 
     integer_attribute :id
     integer_attribute :product_id
+    integer_attribute :product_catalog_id
     integer_attribute :qty
     integer_attribute :wtb_qty
 
     string_attribute :catalog_id
+    string_attribute :product_name
 
     boolean_attribute :is_default
     boolean_attribute :is_infinite_qty
