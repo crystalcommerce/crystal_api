@@ -41,5 +41,6 @@ require 'crystal_api/paginated_collection'
 require 'crystal_api/store_endpoint'
 require 'crystal_api/webhook_registration'
 
+require 'crystal_api/hmac_request_signing'
 require 'crystal_api/message_verifier'
 require 'crystal_api/webhook_verifier'

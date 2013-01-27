@@ -1,5 +1,3 @@
-require 'hmac_request_signing'
-
 module CrystalApi
   class MessageVerifier
     include HmacRequestSigning
