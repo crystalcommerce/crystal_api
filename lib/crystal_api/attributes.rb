@@ -113,7 +113,23 @@ module CrystalApi
       return result + self.class.hash
     end
 
+    def as_json(options = {})
+      {
+        root_key => self.class.attributes.inject({}) { |acc, (key, _)|
+          unless options.fetch(:except, []).include?(key.to_sym)
+            value = send(key)
+            acc[key.to_s] = value.respond_to?(:as_json) ? value.as_json : value
+          end
+          acc
+        }
+      }
+    end
+
     private
+
+    def root_key
+      self.class.get_root_element.to_s
+    end
 
     def parse_arg(arg, value)
       type, type2 = self.class.attributes[arg.to_s]

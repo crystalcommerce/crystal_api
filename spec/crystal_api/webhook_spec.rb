@@ -18,4 +18,32 @@ describe CrystalApi::Webhook do
     its(:topic)       { should == "pages/create" }
     its(:id)          { should == 11 }
   end
+
+  describe "#as_json" do
+    subject { CrystalApi::Webhook.new(address: "https://example.com/cb",
+                                      resource_id: 123,
+                                      topic: "pages/create",
+                                      id: 1) }
+
+    its(:as_json) { should == {
+      "webhook" => {
+        "address"     => "https://example.com/cb",
+        "resource_id" => 123,
+        "topic"       => "pages/create",
+        "id"          => 1
+      }
+    }}
+
+    describe "except key" do
+      it "ignores the key expected" do
+        subject.as_json(:except => [:id]).should == {
+          "webhook" => {
+            "address"     => "https://example.com/cb",
+            "resource_id" => 123,
+            "topic"       => "pages/create"
+          }
+        }
+      end
+    end
+  end
 end
