@@ -11,6 +11,8 @@ http://apidocs.crystalcommerce.com for API documentation.
   backend, so that async http calls can be made (faraday?)
 * Remove git ls-files usage from gemspec
 * Add usage documentation to apidocs site
+* Define behavior for http responses (404, 403, 500, etc)
+* Allow user of gem to specify json parsing library
 
 ## Installation
 
