@@ -29,6 +29,7 @@ describe CrystalApi::WebhookRegistration do
   end
 
   describe "#registered?" do
+    let(:parsed_response) { mock("Parsed Response", :parsed => existing_webhooks) }
     let(:existing_webhooks) { [] }
     let(:existing_webhook) { mock("Webhook", address: 'url',
                                              topic: 'pages/update',
@@ -39,7 +40,7 @@ describe CrystalApi::WebhookRegistration do
                                     resource_id: nil) }
 
     before(:each) do
-      store_endpoint.stub(:get).and_return(existing_webhooks)
+      store_endpoint.stub(:get).and_return(parsed_response)
     end
 
     it "gets all the existing webhooks" do
@@ -72,6 +73,7 @@ describe CrystalApi::WebhookRegistration do
   end
 
   describe "registered_webhooks" do
+    let(:parsed_response) { mock("Parsed Response", :parsed => existing_webhooks) }
     let(:existing_webhooks) { [existing_webhook] }
     let(:existing_webhook) { mock("Webhook", address: 'url',
                                              topic: 'pages/update',
@@ -79,7 +81,7 @@ describe CrystalApi::WebhookRegistration do
                                              id: 11) }
 
     before(:each) do
-      store_endpoint.stub(:get).and_return(existing_webhooks)
+      store_endpoint.stub(:get).and_return(parsed_response)
     end
 
     it "gets all the existing webhooks" do
