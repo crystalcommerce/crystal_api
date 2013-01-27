@@ -4,7 +4,7 @@ module CrystalApi
 
     root_element :variant_descriptor
 
-		string_attribute :name
-		string_attribute :value
+    string_attribute :name
+    string_attribute :value
   end
 end

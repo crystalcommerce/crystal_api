@@ -7,9 +7,9 @@ module CrystalApi
     integer_attribute :id
     integer_attribute :catalog_id
 
-		string_attribute :name
-		string_attribute :seoname
-		string_attribute :description
+    string_attribute :name
+    string_attribute :seoname
+    string_attribute :description
 
     decimal_attribute :weight
 

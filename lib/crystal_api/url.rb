@@ -1,9 +1,9 @@
 module CrystalApi
-	class Url
-		include Attributes
+  class Url
+    include Attributes
 
-		root_element :url
+    root_element :url
 
-		string_attribute :href
-	end
+    string_attribute :href
+  end
 end

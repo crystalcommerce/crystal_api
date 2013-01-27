@@ -1,11 +1,11 @@
 module CrystalApi
-	class StorePrefs
-		include Attributes
+  class StorePrefs
+    include Attributes
 
-		root_element :store_prefs
+    root_element :store_prefs
 
-		string_attribute :city
-		string_attribute :hostname
+    string_attribute :city
+    string_attribute :hostname
     string_attribute :return_blurb
     string_attribute :time_zone
     string_attribute :customer_service_phone
@@ -33,8 +33,8 @@ module CrystalApi
     string_attribute :buylist_reminder_days
     string_attribute :enable_order_notifications
     string_attribute :enable_buy_order_notifications
-		string_attribute :buylist_email
-		string_attribute :satisfaction_blurb
+    string_attribute :buylist_email
+    string_attribute :satisfaction_blurb
 
     boolean_attribute :display_customer_service_phone
     boolean_attribute :hide_bank_transfer_details_in_emails
@@ -47,8 +47,8 @@ module CrystalApi
     boolean_attribute :enable_account_approval
     boolean_attribute :enable_watermarking_of_product_photos
     boolean_attribute :enable_invoice_logo
-		boolean_attribute :enable_frontend_auto_translate
+    boolean_attribute :enable_frontend_auto_translate
 
-		object_attribute :logo_photo
-	end
+    object_attribute :logo_photo
+  end
 end

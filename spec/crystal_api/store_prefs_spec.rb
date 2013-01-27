@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe CrystalApi::StorePrefs do
-	describe ".from_json" do
-		let(:json_hash) do
-			JSON.parse(<<-STR)
+  describe ".from_json" do
+    let(:json_hash) do
+      JSON.parse(<<-STR)
 {
   "store_prefs": {
     "buylist_email": "donald@crystalcommerce.com",
@@ -61,13 +61,13 @@ describe CrystalApi::StorePrefs do
     "enable_invoice_logo": false
   }
 }
-			STR
-		end
+      STR
+    end
 
-		subject { CrystalApi::StorePrefs.from_json(json_hash) }
+    subject { CrystalApi::StorePrefs.from_json(json_hash) }
 
-		its(:hostname) { should == "www.example.com" }
-		its(:city) { should == "Seattle" }
+    its(:hostname) { should == "www.example.com" }
+    its(:city) { should == "Seattle" }
 
     its(:return_blurb)                           { should == "If your order ever arrives in less than expected condition, please promptly return it to us for a full refund. We take your business with us very seriously." }
     its(:time_zone)                              { should == "Pacific Time (US & Canada)" }
@@ -115,5 +115,5 @@ describe CrystalApi::StorePrefs do
       CrystalApi::Photo.new(is_default: false,
         urls: {"original" => {href: "http://crystalcommerce-development.s3.amazonaws.com/photo/arux/file/8e233b1f3da489341a9d55a1ca744556/arux-banner.png"}})
     }
-	end
+  end
 end

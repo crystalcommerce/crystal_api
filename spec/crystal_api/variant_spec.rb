@@ -58,7 +58,7 @@ describe CrystalApi::Variant do
         'store_credit_buy_price' => {'money' => {'cents' => 130, 'currency' => 'USD'}},
         'catalog_id'             => 'skusku',
         'product_catalog_id'     => 55,
-				'product_name'           => "Lotus Cobra",
+        'product_name'           => "Lotus Cobra",
         'descriptors' => [
           {
             'variant_descriptor' => {
@@ -74,10 +74,10 @@ describe CrystalApi::Variant do
     its(:descriptors) { should == [
       CrystalApi::VariantDescriptor.new(name: 'Condition', value: 'Near Mint')
     ] }
-		its(:sell_price) { should == Money.new(500) }
-		its(:buy_price) { should == Money.new(100) }
-		its(:store_credit_buy_price) { should == Money.new(130) }
-		its(:product_catalog_id) { should == 55 }
-		its(:product_name) { should == "Lotus Cobra" }
+    its(:sell_price) { should == Money.new(500) }
+    its(:buy_price) { should == Money.new(100) }
+    its(:store_credit_buy_price) { should == Money.new(130) }
+    its(:product_catalog_id) { should == 55 }
+    its(:product_name) { should == "Lotus Cobra" }
   end
 end

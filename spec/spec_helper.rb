@@ -16,10 +16,10 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 
-	require 'webmock/rspec'
+  require 'webmock/rspec'
   require_relative 'support/attribute_examples'
-	require_relative 'support/vcr'
+  require_relative 'support/vcr'
 
-	# in RSpec 3 this will no longer be necessary.
+  # in RSpec 3 this will no longer be necessary.
   config.treat_symbols_as_metadata_keys_with_true_values = true
 end
