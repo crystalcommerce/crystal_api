@@ -7,10 +7,10 @@ Gem::Specification.new do |gem|
   gem.name          = "crystal_api"
   gem.version       = CrystalApi::VERSION
   gem.authors       = ["Donald Plummer"]
-  gem.email         = ["donald@cideasphere.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.email         = ["donald@crystalcommerce.com"]
+  gem.description   = %q{A library for using the CrystalCommerce API.}
+  gem.summary       = %q{A library for using the CrystalCommerce API.}
+  gem.homepage      = "http://apidocs.crystalcommerce.com"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

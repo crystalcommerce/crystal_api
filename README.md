@@ -7,6 +7,10 @@ http://apidocs.crystalcommerce.com for API documentation.
 
 * Receiving Webhook payload verification
 * Sending Webhook payload signing
+* Switch to http client that the user of the gem can override the
+  backend, so that async http calls can be made (faraday?)
+* Remove git ls-files usage from gemspec
+* Add usage documentation to apidocs site
 
 ## Installation
 
