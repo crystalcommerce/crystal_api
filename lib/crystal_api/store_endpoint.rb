@@ -29,7 +29,7 @@ module CrystalApi
     end
 
     def post(path, payload)
-      raw = RestClient.get(base_url + path, payload, headers)
+      raw = RestClient.post(base_url + path, payload, headers)
 
       wrap_response(raw)
     end
