@@ -25,20 +25,40 @@ module CrystalApi
     def get(path)
       raw = RestClient.get(base_url + path, headers)
 
-      if raw.code == 200
-        json = JSON.parse(raw)
+      wrap_response(raw)
+    end
 
-        parsed = if json.is_a?(Array)
-                   json.map {|obj| parse(obj)}
-                 else
-                   parse(json)
-                 end
-      end
+    def post(path, payload)
+      raw = RestClient.get(base_url + path, payload, headers)
+
+      wrap_response(raw)
+    end
+
+    def delete(path)
+      raw = RestClient.delete(base_url + path, headers)
+
+      wrap_response(raw)
+    end
+
+    private
+
+    def wrap_response(raw)
+      parsed = parse_response_body(raw)
 
       Response.new(parsed, raw)
     end
 
-    private
+    def parse_response_body(raw)
+      json = JSON.parse(raw)
+
+      if json.is_a?(Array)
+        json.map {|obj| parse(obj)}
+      else
+        parse(json)
+      end
+    rescue JSON::ParserError
+      nil
+    end
 
     def parse(object)
       CrystalApi.from_json(object)
