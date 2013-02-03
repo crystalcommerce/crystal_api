@@ -7,6 +7,6 @@ module CrystalApi
     string_attribute :topic
     string_attribute :store_name
     integer_attribute :resource_id
-    object_attribute :payload
+    attribute :payload
   end
 end

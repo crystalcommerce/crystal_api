@@ -44,6 +44,11 @@ module CrystalApi
         @attributes[attribute_name.to_s] = [:hash, type]
       end
 
+      def attribute(attribute_name)
+        attr_reader attribute_name
+        @attributes[attribute_name.to_s] = :unknown
+      end
+
       def root_element(elem)
         @root_element = elem.to_s
       end
@@ -194,5 +199,12 @@ module CrystalApi
       send("parse_#{type}", value)
     end
 
+    def parse_unknown(value)
+      if value.is_a?(Hash)
+        parse_object(value)
+      elsif value.is_a?(Array)
+        parse_array(value)
+      end
+    end
   end
 end

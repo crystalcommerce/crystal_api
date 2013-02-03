@@ -12,7 +12,7 @@ http://apidocs.crystalcommerce.com for API documentation.
 * Remove git ls-files usage from gemspec
 * Add usage documentation to apidocs site
 * Define behavior for http responses (404, 403, 500, etc)
-* Allow user of gem to specify json parsing library
+* Allow user of gem to specify json parsing library (MultiJSON)
 
 ## Installation
 
