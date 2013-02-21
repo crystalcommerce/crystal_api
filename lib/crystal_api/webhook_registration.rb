@@ -23,5 +23,12 @@ module CrystalApi
     def registered_webhooks
       endpoint.get('/webhooks').parsed
     end
+
+    def webhook_id(webhook)
+      wh = registered_webhooks.detect {|wh| wh.address == webhook.address &&
+                                       wh.topic   == webhook.topic &&
+                                       wh.resource_id == webhook.resource_id }
+      wh && wh.id
+    end
   end
 end

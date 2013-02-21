@@ -93,4 +93,39 @@ describe CrystalApi::WebhookRegistration do
       subject.registered_webhooks.should == existing_webhooks
     end
   end
+
+  describe "#webhook_id" do
+    let(:parsed_response) { mock("Parsed Response", :parsed => existing_webhooks) }
+    let(:existing_webhooks) { [] }
+    let(:existing_webhook) { mock("Webhook", address: 'url',
+                                             topic: 'pages/update',
+                                             resource_id: nil,
+                                             id: 11) }
+    let(:webhook) { mock("Webhook", address: 'url',
+                                    topic: 'pages/update',
+                                    resource_id: nil) }
+
+    before(:each) do
+      store_endpoint.stub(:get).and_return(parsed_response)
+    end
+
+    it "gets all the existing webhooks" do
+      store_endpoint.should_receive(:get).with('/webhooks')
+      subject.webhook_id(webhook)
+    end
+
+    context "one of the returned webhooks the webhook we already have" do
+      let(:existing_webhooks) { [existing_webhook] }
+
+      it "returns true" do
+        subject.webhook_id(webhook).should == 11
+      end
+    end
+
+    context "the webhook we want is not registered" do
+      it "returns false" do
+        subject.webhook_id(webhook).should == nil
+      end
+    end
+  end
 end
