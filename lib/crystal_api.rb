@@ -3,7 +3,7 @@ $: << (File.join(File.dirname(__FILE__)))
 require "crystal_api/version"
 require 'money'
 require 'active_support'
-require 'oj'
+require 'multi_json'
 
 module CrystalApi
   def self.from_json(object)

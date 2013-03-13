@@ -11,7 +11,7 @@ module CrystalApi
     end
 
     def json
-      @json ||= Oj.load(raw_post)
+      @json ||= MultiJson.load(raw_post)
     end
   end
 end

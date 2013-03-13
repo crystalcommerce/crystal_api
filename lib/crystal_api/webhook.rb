@@ -9,5 +9,7 @@ module CrystalApi
 
     string_attribute :address
     string_attribute :topic
+
+    boolean_attribute :only_catalog
   end
 end

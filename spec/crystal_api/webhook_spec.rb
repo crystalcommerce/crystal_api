@@ -7,7 +7,8 @@ describe CrystalApi::Webhook do
         "address"     => "https://example.com/cb",
         "resource_id" => 123,
         "topic"       => "pages/create",
-        "id"          => 11
+        "id"          => 11,
+        "only_catalog" => true
       }
     }}
 
@@ -17,20 +18,23 @@ describe CrystalApi::Webhook do
     its(:resource_id) { should == 123 }
     its(:topic)       { should == "pages/create" }
     its(:id)          { should == 11 }
+    its(:only_catalog) { should == true }
   end
 
   describe "#as_json" do
     subject { CrystalApi::Webhook.new(address: "https://example.com/cb",
                                       resource_id: 123,
                                       topic: "pages/create",
-                                      id: 1) }
+                                      id: 1,
+                                      only_catalog: true) }
 
     its(:as_json) { should == {
       "webhook" => {
         "address"     => "https://example.com/cb",
         "resource_id" => 123,
         "topic"       => "pages/create",
-        "id"          => 1
+        "id"          => 1,
+        "only_catalog" => true
       }
     }}
 
@@ -40,7 +44,8 @@ describe CrystalApi::Webhook do
           "webhook" => {
             "address"     => "https://example.com/cb",
             "resource_id" => 123,
-            "topic"       => "pages/create"
+            "topic"       => "pages/create",
+            "only_catalog" => true
           }
         }
       end
