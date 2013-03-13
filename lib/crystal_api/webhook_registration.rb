@@ -16,8 +16,8 @@ module CrystalApi
                                      wh.resource_id == webhook.resource_id }
     end
 
-    def deregister(webhook)
-      endpoint.delete("/webhooks/#{webhook.id}")
+    def deregister(webhook_id)
+      endpoint.delete("/webhooks/#{webhook_id}")
     end
 
     def registered_webhooks

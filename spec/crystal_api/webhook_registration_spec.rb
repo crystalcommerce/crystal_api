@@ -64,11 +64,9 @@ describe CrystalApi::WebhookRegistration do
   end
 
   describe "#deregister" do
-    let(:webhook) { mock("Webhook", id: 11) }
-
     it "makes a delete request to the endpoint" do
       store_endpoint.should_receive(:delete).with("/webhooks/11")
-      subject.deregister(webhook)
+      subject.deregister(11)
     end
   end
 
