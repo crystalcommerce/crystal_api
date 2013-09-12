@@ -38,6 +38,7 @@ require 'crystal_api/descriptor'
 require 'crystal_api/store_prefs'
 require 'crystal_api/webhook'
 require 'crystal_api/paginated_collection'
+require 'crystal_api/report'
 
 require 'crystal_api/store_endpoint'
 require 'crystal_api/webhook_registration'
