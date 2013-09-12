@@ -5,7 +5,7 @@ module CrystalApi
   class StoreEndpoint
     attr_reader :base_url, :token
 
-    class Response < Value.new(:parsed, :raw)
+    class Response < Value.new(:parsed, :raw, :json)
       def to_s
         "<CrystalApi::StoreEndpoint::Response parsed:#{parsed.class.name} raw.length:#{raw.length}>"
       end
@@ -43,14 +43,13 @@ module CrystalApi
     private
 
     def wrap_response(raw)
-      parsed = parse_response_body(raw)
+      json = JSON.parse(raw)
+      parsed = parse_response_body(json)
 
-      Response.new(parsed, raw)
+      Response.new(parsed, raw, json)
     end
 
-    def parse_response_body(raw)
-      json = JSON.parse(raw)
-
+    def parse_response_body(json)
       if json.is_a?(Array)
         json.map {|obj| parse(obj)}
       else
