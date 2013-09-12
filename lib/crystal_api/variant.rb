@@ -12,6 +12,8 @@ module CrystalApi
     integer_attribute :product_id
     integer_attribute :product_catalog_id
     integer_attribute :qty
+    integer_attribute :actual_qty
+    integer_attribute :inventory_qty
     integer_attribute :wtb_qty
 
     string_attribute :catalog_id

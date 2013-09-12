@@ -15,6 +15,7 @@ module CrystalApi
 
     integer_attribute :qty
     integer_attribute :wtb_qty
+    integer_attribute :max_qty
 
     boolean_attribute :is_buying
     boolean_attribute :is_selling
