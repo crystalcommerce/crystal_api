@@ -24,22 +24,20 @@ module CrystalApi
       }
     end
 
-    def get(path)
-      raw = RestClient.get(base_url + path, headers)
+    [:get, :delete].each do |method|
+      define_method(method) do |path|
+        raw = RestClient.public_send(method, base_url + path, headers)
 
-      wrap_response(raw)
+        wrap_response(raw)
+      end
     end
 
-    def post(path, payload)
-      raw = RestClient.post(base_url + path, payload, headers)
+    [:post, :put].each do |method|
+      define_method(method) do |path, payload|
+        raw = RestClient.public_send(method, base_url + path, payload, headers)
 
-      wrap_response(raw)
-    end
-
-    def delete(path)
-      raw = RestClient.delete(base_url + path, headers)
-
-      wrap_response(raw)
+        wrap_response(raw)
+      end
     end
 
     private
