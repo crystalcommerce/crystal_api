@@ -20,7 +20,10 @@ module CrystalApi
 
     def headers
       {
-        'Authorization' => "OAuth #{token}"
+        "Authorization"    => "OAuth #{token}",
+        "Accept"           => "application/json",
+        "Content-Type"     => "application/json",
+        "X-Requested-With" => "XMLHttpRequest"
       }
     end
 

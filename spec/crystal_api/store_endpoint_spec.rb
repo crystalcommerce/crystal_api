@@ -6,7 +6,7 @@ describe CrystalApi::StoreEndpoint, :vcr do
 
   its(:base_url) { should == "http://localhost:3000/api/v1" }
   its(:token) { should == "TOKEN" }
-  its(:headers) { should == {"Authorization" => "OAuth TOKEN"} }
+  its(:headers) { should include("Authorization" => "OAuth TOKEN") }
 
   describe "#get" do
     context "/prefs/store" do
