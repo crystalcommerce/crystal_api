@@ -6,6 +6,8 @@ module CrystalApi
     attr_reader :base_url, :token
 
     class Response < Value.new(:parsed, :raw, :json)
+      alias_method :to_hash, :json
+
       def to_s
         "<CrystalApi::StoreEndpoint::Response parsed:#{parsed.class.name} raw.length:#{raw.length}>"
       end
