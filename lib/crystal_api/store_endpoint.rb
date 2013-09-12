@@ -1,12 +1,13 @@
-require 'rest_client'
+require 'httparty'
 require 'values'
 
 module CrystalApi
   class StoreEndpoint
     attr_reader :base_url, :token
 
-    class Response < Value.new(:parsed, :raw, :json)
+    class Response < Value.new(:success, :parsed, :raw, :json)
       alias_method :to_hash, :json
+      alias_method :success?, :success
 
       def to_s
         "<CrystalApi::StoreEndpoint::Response parsed:#{parsed.class.name} raw.length:#{raw.length}>"
@@ -27,18 +28,17 @@ module CrystalApi
       }
     end
 
-    [:get, :delete].each do |method|
-      define_method(method) do |path|
-        raw = RestClient.public_send(method, base_url + path, headers)
+    [:get, :delete, :post, :put].each do |method|
+      define_method(method) do |*args|
+        options = {:headers => headers}
+        if args.length == 2
+          options[:body] = args[1].to_json
+        end
 
-        wrap_response(raw)
-      end
-    end
+        path = args[0]
+        url = base_url + path
 
-    [:post, :put].each do |method|
-      define_method(method) do |path, payload|
-        raw = RestClient.public_send(method, base_url + path, payload, headers)
-
+        raw = HTTParty.public_send(method, url, options)
         wrap_response(raw)
       end
     end
@@ -46,10 +46,18 @@ module CrystalApi
     private
 
     def wrap_response(raw)
-      json = JSON.parse(raw)
-      parsed = parse_response_body(json)
+      json = JSON.parse(raw.body)
+      if raw.code == 200
+        parsed = parse_response_body(json)
+      else
+        parsed = error_response(json)
+      end
 
-      Response.new(parsed, raw, json)
+      Response.new(raw.code == 200, parsed, raw, json)
+    end
+
+    def error_response(json)
+      ErrorResponse.new(json)
     end
 
     def parse_response_body(json)

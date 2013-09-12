@@ -6,6 +6,8 @@ require 'active_support'
 require 'multi_json'
 
 module CrystalApi
+  CannotParseJson = Class.new(StandardError)
+
   def self.from_json(object)
     find_klass(object.keys.first).from_json(object)
   end
@@ -40,6 +42,7 @@ require 'crystal_api/webhook'
 require 'crystal_api/paginated_collection'
 require 'crystal_api/report'
 
+require 'crystal_api/error_response'
 require 'crystal_api/store_endpoint'
 require 'crystal_api/webhook_registration'
 

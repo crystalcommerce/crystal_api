@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "money", "~> 5"
   gem.add_dependency "values", "~> 1.2.1"
   gem.add_dependency "activesupport"
-  gem.add_dependency "rest-client"
+  gem.add_dependency "httparty"
   gem.add_dependency "multi_json"
 
   gem.add_development_dependency 'rspec', '~> 2.11.0'
