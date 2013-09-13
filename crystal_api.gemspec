@@ -30,4 +30,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'webmock', '~> 1.8.0'
   gem.add_development_dependency 'libnotify'
   gem.add_development_dependency 'rb-inotify', '~> 0.8.8'
+  gem.add_development_dependency 'pry'
 end

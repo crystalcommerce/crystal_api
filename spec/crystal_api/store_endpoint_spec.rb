@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CrystalApi::StoreEndpoint, :vcr do
+describe CrystalApi::StoreEndpoint do
   subject { CrystalApi::StoreEndpoint.new(base_url: "http://localhost:3000/api/v1",
                                           token: "TOKEN") }
 
@@ -9,7 +9,7 @@ describe CrystalApi::StoreEndpoint, :vcr do
   its(:headers) { should include("Authorization" => "OAuth TOKEN") }
 
   describe "#get" do
-    context "/prefs/store" do
+    context "/prefs/store", :vcr do
       it "makes the request to the endpoint" do
         subject.get("/prefs/store")
         a_request(:get, "http://localhost:3000/api/v1/prefs/store").
@@ -18,6 +18,19 @@ describe CrystalApi::StoreEndpoint, :vcr do
 
       it "parses the returned a store pref" do
         subject.get("/prefs/store").parsed.should be_a(CrystalApi::StorePrefs)
+      end
+    end
+
+    context "csv parsing" do
+      before do
+        stub_request(:get, "http://localhost:3000/api/v1/reports/1234/download").
+          to_return(:body => "id,name\n1,Fred",
+                    :headers => {:content_type => "text/csv"})
+      end
+
+      it "parses the response as a CSV" do
+        response = subject.get("/reports/1234/download")
+        response.parsed.should be_a(CSV::Table)
       end
     end
   end

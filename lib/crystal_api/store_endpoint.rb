@@ -1,5 +1,6 @@
 require 'httparty'
 require 'values'
+require 'csv'
 
 module CrystalApi
   class StoreEndpoint
@@ -46,11 +47,15 @@ module CrystalApi
     private
 
     def wrap_response(raw)
-      json = JSON.parse(raw.body)
-      if raw.code == 200
-        parsed = parse_response_body(json)
-      else
-        parsed = error_response(json)
+      if raw.content_type =~ /application\/json/
+        json = JSON.parse(raw.body)
+        if raw.code == 200
+          parsed = parse_response_body(json)
+        else
+          parsed = error_response(json)
+        end
+      elsif raw.content_type =~ /text\/csv/
+        parsed = CSV.parse(raw.body, :headers => true)
       end
 
       Response.new(raw.code == 200, parsed, raw, json)
