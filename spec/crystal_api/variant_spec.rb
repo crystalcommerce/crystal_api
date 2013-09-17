@@ -59,6 +59,7 @@ describe CrystalApi::Variant do
         'catalog_id'             => 'skusku',
         'product_catalog_id'     => 55,
         'product_name'           => "Lotus Cobra",
+        'category_name'          => "Zendikar",
         'descriptors' => [
           {
             'variant_descriptor' => {
@@ -79,5 +80,6 @@ describe CrystalApi::Variant do
     its(:store_credit_buy_price) { should == Money.new(130) }
     its(:product_catalog_id) { should == 55 }
     its(:product_name) { should == "Lotus Cobra" }
+    its(:category_name) { should == "Zendikar" }
   end
 end

@@ -18,6 +18,7 @@ module CrystalApi
 
     string_attribute :catalog_id
     string_attribute :product_name
+    string_attribute :category_name
 
     boolean_attribute :is_default
     boolean_attribute :is_infinite_qty
