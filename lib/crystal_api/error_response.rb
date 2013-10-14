@@ -1,5 +1,7 @@
 module CrystalApi
   class ErrorResponse
+
+    attr_reader :json
     def initialize(json)
       @json = json
     end
