@@ -30,7 +30,7 @@ module CrystalApi
     end
 
     [:get, :delete, :post, :put].each do |method|
-      define_method(method) do |*args|
+      define_method(method) do |*args, &block|
         options = {
           :headers => headers,
           :basic_auth => {
@@ -45,8 +45,12 @@ module CrystalApi
         path = args[0]
         url = base_url + path
 
-        raw = HTTParty.public_send(method, url, options)
-        wrap_response(raw)
+        if block.nil?
+          raw = HTTParty.public_send(method, url, options)
+          wrap_response(raw)
+        else
+          HTTParty.public_send(method, url, options, &block)
+        end
       end
     end
 
