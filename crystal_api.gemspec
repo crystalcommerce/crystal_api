@@ -17,8 +17,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "money", "~> 5"
-  gem.add_dependency "values", "~> 1.2.1"
+  gem.add_dependency "money"
+  gem.add_dependency "values"
   gem.add_dependency "activesupport"
   gem.add_dependency "httparty"
   gem.add_dependency "multi_json"
