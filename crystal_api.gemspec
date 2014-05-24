@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.name          = "crystal_api"
   gem.version       = CrystalApi::VERSION
   gem.authors       = ["Donald Plummer"]
-  gem.email         = ["donald@crystalcommerce.com"]
+  gem.email         = ["username@crystalcommerce.com"]
   gem.description   = %q{A library for using the CrystalCommerce API.}
   gem.summary       = %q{A library for using the CrystalCommerce API.}
   gem.homepage      = "http://apidocs.crystalcommerce.com"
@@ -26,7 +26,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 2.11.0'
   gem.add_development_dependency 'guard', '~> 1.2.3'
   gem.add_development_dependency 'guard-rspec', '~> 1.2.1'
-  gem.add_development_dependency 'vcr', '~> 2.2.4'
+  gem.add_development_dependency 'vcr', '~> 2.9'
   gem.add_development_dependency 'webmock', '~> 1.8.0'
   gem.add_development_dependency 'libnotify'
   gem.add_development_dependency 'rb-inotify', '~> 0.8.8'

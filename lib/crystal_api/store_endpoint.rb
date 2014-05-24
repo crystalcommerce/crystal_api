@@ -4,7 +4,7 @@ require 'csv'
 
 module CrystalApi
   class StoreEndpoint
-    attr_reader :base_url, :token
+    attr_reader :base_url, :username, :license
 
     class Response < Value.new(:success, :parsed, :raw, :json)
       alias_method :to_hash, :json
@@ -17,12 +17,12 @@ module CrystalApi
 
     def initialize(args = {})
       @base_url = args[:base_url]
-      @token = args[:token]
+      @username = args[:username]
+      @license = args[:license]
     end
 
     def headers
       {
-        "Authorization"    => "OAuth #{token}",
         "Accept"           => "application/json",
         "Content-Type"     => "application/json",
         "X-Requested-With" => "XMLHttpRequest"
@@ -31,7 +31,13 @@ module CrystalApi
 
     [:get, :delete, :post, :put].each do |method|
       define_method(method) do |*args|
-        options = {:headers => headers}
+        options = {
+          :headers => headers,
+          :basic_auth => {
+            :username => username,
+            :password => license
+          }
+        }
         if args.length == 2
           options[:body] = args[1].to_json
         end
